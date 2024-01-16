@@ -3,8 +3,9 @@ package com.apress.todo.controller;
 import com.apress.todo.domain.ToDo;
 import com.apress.todo.domain.ToDoBuilder;
 import com.apress.todo.repository.ToDoRepository;
-import com.apress.todo.validation.ToDoValidationError;
-import com.apress.todo.validation.ToDoValidationErrorBuilder;
+
+//import com.apress.todo.validation.ToDoValidationError;
+//import com.apress.todo.validation.ToDoValidationErrorBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -61,7 +62,8 @@ public class ToDoController {
     @RequestMapping(value="/todo", method = {RequestMethod.POST,RequestMethod.PUT})
     public ResponseEntity<?> createToDo(@Valid @RequestBody ToDo toDo, Errors errors){
         if (errors.hasErrors()) {
-            return ResponseEntity.badRequest().body(ToDoValidationErrorBuilder.fromBindingErrors(errors));
+        	return ResponseEntity.badRequest().body(null);
+            //return ResponseEntity.badRequest().body(ToDoValidationErrorBuilder.fromBindingErrors(errors));
         }
 
         ToDo result = toDoRepository.save(toDo);
@@ -82,10 +84,11 @@ public class ToDoController {
         return ResponseEntity.noContent().build();
     }
 
+    /*
     @ExceptionHandler
     @ResponseStatus(value = HttpStatus.BAD_REQUEST)
     public ToDoValidationError handleException(Exception exception) {
         return new ToDoValidationError(exception.getMessage());
     }
-
+*/
 }
